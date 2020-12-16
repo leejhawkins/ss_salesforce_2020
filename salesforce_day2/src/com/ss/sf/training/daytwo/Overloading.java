@@ -9,6 +9,7 @@ public class Overloading {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter values separated by spaces: ");
 		
+		// Create arrays for three types integers, doubles and strings		
 		ArrayList<Integer> intArray = new ArrayList<Integer>();
 		ArrayList<Double> doubleArray = new ArrayList<Double>();
 		ArrayList<String> stringArray = new ArrayList<String>();
@@ -17,17 +18,20 @@ public class Overloading {
 		while (scanner.hasNext() == true)  {
 			if (scanner.hasNextInt()) {
 				intArray.add(scanner.nextInt());
+				// create integer array to allow overloading of method			
 				int size = intArray.size();
 				int[] intArray2 = new int[size];
 				for (int i =0; i<intArray2.length; i++) {
 					intArray2[i] = intArray.get(i);
 				}
+								
 				ovl.addValues(intArray2);
 				
 				
 			} else if (scanner.hasNextDouble()) {
 				doubleArray.add(scanner.nextDouble());
 				int size = doubleArray.size();
+				// create double array to allow overloading of method
 				double[] double2 = new double[size];
 				for (int i =0; i<double2.length; i++) {
 					double2[i] = doubleArray.get(i);
@@ -35,6 +39,7 @@ public class Overloading {
 				ovl.addValues(double2);
 				
 			} else if (scanner.hasNext()){
+				// only one arraylist type, kept string arraylist				
 				stringArray.add(scanner.next());
 				ovl.addValues(stringArray);
 			} else {
@@ -44,17 +49,7 @@ public class Overloading {
 			
 
 		}
-		scanner.close();
-		
-		
-		
-		
-		
-		
-		 
-		
-		
-		
+		scanner.close();	
 	}
 	public void addValues(int[] arr) {
 		int sum = 0;
