@@ -1,5 +1,6 @@
 package com.ss.sf.training.daytwo;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -33,28 +34,32 @@ public class Overloading {
 			}
 			
 		}
-		int intSize = intArray.size();
-		int[] intArray2 = new int[intSize];
-		for (int i =0; i<intArray2.length; i++) {
-			intArray2[i] = intArray.get(i);
-		}						
-		ovl.addValues(intArray2);
-		int doubleSize = doubleArray.size();
-		// create double array to allow overloading of method
-		double[] double2 = new double[doubleSize];
-		for (int i =0; i<double2.length; i++) {
-			double2[i] = doubleArray.get(i);
+		if (intArray.size()>0) {
+			List<Integer> intArray2= intArray;					
+			ovl.addValues(intArray2);
 		}
-		ovl.addValues(double2);
-		ovl.addValues(stringArray);
+		if (doubleArray.size()>0) {
+			int doubleSize = doubleArray.size();
+			// create double array to allow overloading of method
+			double[] double2 = new double[doubleSize];
+			for (int i =0; i<double2.length; i++) {
+				double2[i] = doubleArray.get(i);
+			}
+			ovl.addValues(double2);
+		} 
+		if (stringArray.size() > 0) {
+			ovl.addValues(stringArray);
+		}
+		
+		
 		scanner.close();
 		
 		
 	}
-	public void addValues(int[] arr) {
+	public void addValues(List<Integer> arr) {
 		int sum = 0;
-		for (int i = 0; i < arr.length; i++) {
-			sum += arr[i];
+		for (int i = 0; i < arr.size(); i++) {
+			sum += arr.get(i);
 		}
 		System.out.println("The sum of the integers is: " + sum);
 	}
