@@ -2,3 +2,8 @@ File for output text from AppendFile.java:
 This is the first line of text written from AppendFile.java
 This is the second line written to AppendFile.java
 And on and on
+It's a lovely day
+
+it's great
+Can now add multiple lines to text file
+And another line same session

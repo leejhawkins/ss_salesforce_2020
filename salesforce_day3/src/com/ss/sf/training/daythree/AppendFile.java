@@ -20,15 +20,16 @@ public class AppendFile {
 	 */
 	public static void main(String[] args) throws IOException {
 		AppendFile af = new AppendFile();
-		af.appendToFile();		
-			
-	}
-	public void appendToFile() throws IOException {
 		System.out.print("What would like to add to the text file?\n");
 		//	Get user text to write to file	
 		Scanner scanner = new Scanner(System.in);		
-		String input = scanner.nextLine();
 		
+		af.appendToFile(scanner);		
+			
+	}
+	public void appendToFile(Scanner scanner) throws IOException {
+		
+		String input = scanner.nextLine();
 		//	The file to be written to	
 		File file = new File("output/output.txt");
 		FileWriter fw = new FileWriter(file, true);
@@ -36,7 +37,9 @@ public class AppendFile {
 		//	Write to file and close scanner	
 		bw.write("\n" + input);
 		bw.close();
-		scanner.close();
+		System.out.print("What would like to add to the text file?\n");
+		scanner.reset();
+		this.appendToFile(scanner);
 		
 	}
 
