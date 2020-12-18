@@ -7,23 +7,31 @@ package com.ss.sf.training.dayfour;
  * @author leejh
  *
  */
-public class Singleton {
+public class Path {
 	
-	private volatile static Singleton instance = null;
+	private volatile String rootDirectory;
 	
-	private Singleton() {
-		
+	private volatile static Path instance = null;
+	
+	private Path() {
+	 rootDirectory = new String();
 	}
 	
-	public static Singleton getInstance() {
+	public static Path getInstance() {
 		if (instance == null) {
-			synchronized (Singleton.class) {
+			synchronized (Path.class) {
 				if (instance == null) {
-					instance = new Singleton();
+					instance = new Path();
 				}
 			}
 		}
 		return instance;
+	}
+	
+	public Path add(String subDirectory) {
+		rootDirectory = this.rootDirectory + "/" + subDirectory;
+		return this;
+		
 	}
 
 }
