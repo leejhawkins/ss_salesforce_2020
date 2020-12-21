@@ -33,10 +33,10 @@ public class SampleSingleton {
 			conn = DriverManager.getConnection("url of database");
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery("select id from table");
-			List<BigDecimal> ids = new ArrayList<>();
+			List<String> ids = new ArrayList<>();
 			
 			while(rs.next()) {
-				BigDecimal id = rs.getBigDecimal(id);
+				String id = rs.getString("id");
 				ids.add(id);
 			}
 			rs.close();
