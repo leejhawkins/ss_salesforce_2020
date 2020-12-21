@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SampleSingleton {
@@ -27,13 +29,23 @@ public class SampleSingleton {
 		return instance;
 	}
 	public static void databaseQuery(BigDecimal input) throws SQLException {
-		conn = DriverManager.getConnection("url of database");
-		Statement st = conn.createStatement();
-		ResultSet rs = st.executeQuery("select id from table");
-		int x =0;
-		while(rs.next()) {
-			x = rs.getInt(1);
+		try {
+			conn = DriverManager.getConnection("url of database");
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("select id from table");
+			List<BigDecimal> ids = new ArrayList<>();
+			
+			while(rs.next()) {
+				BigDecimal id = rs.getBigDecimal(id);
+				ids.add(id);
+			}
+			rs.close();
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			
+			conn.close();
 		}
 	}
-
 }
