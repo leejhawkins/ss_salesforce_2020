@@ -1,4 +1,4 @@
-package com.ss.sf.training.dayone;
+package src.com.ss.sf.training.dayone;
 import java.util.Scanner;
 import java.util.Random;
 

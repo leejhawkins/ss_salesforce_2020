@@ -53,6 +53,7 @@ public class PrintDirectory {
 				
 			scanner.reset();
 			this.printOutDirectory(subdirectory,scanner);
+			return;
 
 		}
 		
