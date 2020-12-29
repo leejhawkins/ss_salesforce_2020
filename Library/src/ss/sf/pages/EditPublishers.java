@@ -1,6 +1,7 @@
 package ss.sf.pages;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 import ss.sf.library.DAO.PublisherDAO;
@@ -8,7 +9,7 @@ import ss.sf.library.DAO.PublisherDAO;
 import java.util.List;
 
 public class EditPublishers {
-	public static void editPublishers(Scanner scanner) throws ClassNotFoundException, SQLException {
+	public static void editPublishers(Scanner scanner) throws ClassNotFoundException, SQLException, ParseException {
 		System.out.println("What would you like to do?\n"
 				+ "1) Add Publisher\n2) Update Publisher \n3) Delete Publisher");
 		Scanner scannedLine = new Scanner(scanner.nextLine());
@@ -29,7 +30,7 @@ public class EditPublishers {
 			}
 		}
 	}
-	public static void addPublisher(Scanner scanner) throws ClassNotFoundException, SQLException {
+	public static void addPublisher(Scanner scanner) throws ClassNotFoundException, SQLException, ParseException {
 		PublisherDAO pubDAO = new PublisherDAO();
 		Publisher publisher = new Publisher();
 		System.out.println("What is the Id of the publisher you would like to add?");
@@ -51,7 +52,7 @@ public class EditPublishers {
 		AdministratorPage.admin1(scanner);
 		
 	}
-	public static void editPublisher(Scanner scanner) throws ClassNotFoundException, SQLException {
+	public static void editPublisher(Scanner scanner) throws ClassNotFoundException, SQLException, ParseException {
 		PublisherDAO pubDAO = new PublisherDAO();
 		Publisher publisher = new Publisher();
 		List<Publisher> publishers = pubDAO.getPublishers();
@@ -76,7 +77,7 @@ public class EditPublishers {
 		AdministratorPage.admin1(scanner);
 		
 	}
-	public static void deletePublisher(Scanner scanner) throws ClassNotFoundException, SQLException {
+	public static void deletePublisher(Scanner scanner) throws ClassNotFoundException, SQLException, ParseException {
 		PublisherDAO pubDAO = new PublisherDAO();
 		List<Publisher> publishers = pubDAO.getPublishers();
 		publishers.forEach(p -> System.out.println("Id: " + p.getPublisherId()+ " Name: " + p.getPublisherName()

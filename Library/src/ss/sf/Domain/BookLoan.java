@@ -1,18 +1,26 @@
 package ss.sf.Domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class BookLoan {
 	private int bookId;
+	private int cardNo;
 	private String title;
 	private int branchId;
-	private LocalDate dateOut;
-	private LocalDate dueDate;
+	private LocalDateTime dateOut;
+	private LocalDateTime dueDate;
 	public int getBookId() {
 		return bookId;
 	}
 	public void setBookId(int bookId) {
 		this.bookId = bookId;
+	}
+	public int getCardNo() {
+		return cardNo;
+	}
+	public void setCardNo(int cardNo) {
+		this.cardNo = cardNo;
 	}
 	public String getTitle() {
 		return title;
@@ -26,16 +34,16 @@ public class BookLoan {
 	public void setBranchId(int branchId) {
 		this.branchId = branchId;
 	}
-	public LocalDate getDateOut() {
+	public LocalDateTime getDateOut() {
 		return dateOut;
 	}
-	public void setDateOut(LocalDate dateOut) {
+	public void setDateOut(LocalDateTime dateOut) {
 		this.dateOut = dateOut;
 	}
-	public LocalDate getDueDate() {
+	public LocalDateTime getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(LocalDate dueDate) {
+	public void setDueDate(LocalDateTime dueDate) {
 		this.dueDate = dueDate;
 	}
 	

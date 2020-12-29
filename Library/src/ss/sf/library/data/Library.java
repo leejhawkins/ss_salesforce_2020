@@ -5,6 +5,7 @@ package ss.sf.library.data;
 
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,19 +25,19 @@ public class Library {
 	 * @param args
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
+	 * @throws ParseException 
 	 */
-	public static void main(String[] args) throws SQLException, ClassNotFoundException {
+	public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
 
 		Scanner scanner = new Scanner(System.in);
-		Library lib = new Library();
-		lib.getPage(scanner);
+		Library.getPage(scanner);
 		
 		
 		
 		
 
 	}
-	public void getPage(Scanner scanner) throws ClassNotFoundException, SQLException {
+	public static void getPage(Scanner scanner) throws ClassNotFoundException, SQLException, ParseException {
 		System.out.println("Welcome to the SS Libaray Management System.\n Which Category of user are you? (enter number only)");
 		System.out.println("1) Librarian \n2) Administrator \n3) Borrower");
 		
@@ -56,13 +57,13 @@ public class Library {
 			default:
 				System.out.println(userType +" is not a valid choice");
 				scanner.reset();
-				this.getPage(scanner);
+				Library.getPage(scanner);
 				return;
 			}
 		} else {
 			System.out.println("Please only enter the number corresponding to your choices");
 			scanner.reset();
-			this.getPage(scanner);
+			Library.getPage(scanner);
 			return;
 		}
 		

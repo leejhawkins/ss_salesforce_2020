@@ -4,6 +4,7 @@
 package ss.sf.pages;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,7 +20,7 @@ import ss.sf.library.data.Library;
  */
 public class LibrarianPage {
 	
-	public static void lib1(Scanner scanner) throws ClassNotFoundException, SQLException {
+	public static void lib1(Scanner scanner) throws ClassNotFoundException, SQLException, ParseException {
 		System.out.println("1) Enter Branch you manage \n2) Quit to previous menu");
 		
 		Scanner scannedLine = new Scanner(scanner.nextLine());
@@ -48,7 +49,7 @@ public class LibrarianPage {
 			lib1(scanner);
 		}
 	}
-	public static void lib2(Scanner scanner) throws ClassNotFoundException, SQLException {
+	public static void lib2(Scanner scanner) throws ClassNotFoundException, SQLException, ParseException {
 		BranchDAO brDAO = new BranchDAO();
 		List<Branch> branches = brDAO.readBranches();
 		branches.forEach(branch -> System.out.println(branches.indexOf(branch)+1+")"
@@ -73,7 +74,7 @@ public class LibrarianPage {
 			LibrarianPage.lib2(scanner);
 		}
 	}
-	public static void lib3(Scanner scanner,Branch branch) throws ClassNotFoundException, SQLException {
+	public static void lib3(Scanner scanner,Branch branch) throws ClassNotFoundException, SQLException, ParseException {
 		
 		
 		System.out.println("Current Branch: " + branch.getBranchName() + "\n1). Update the details of the Library:\n" +
@@ -97,7 +98,7 @@ public class LibrarianPage {
 			lib3(scanner, branch);
 		}
 	}
-	public static void option1(Scanner scanner,Branch branch) throws ClassNotFoundException, SQLException {
+	public static void option1(Scanner scanner,Branch branch) throws ClassNotFoundException, SQLException, ParseException {
 		BranchDAO brDAO = new BranchDAO();
 		System.out.println("Please enter new branch name or enter N/A for no change:");
 		Branch updatedBranch = new Branch();
@@ -116,19 +117,41 @@ public class LibrarianPage {
 				+ " to " + updatedBranch.getBranchName() + " at " + updatedBranch.getBranchAddress());
 		LibrarianPage.lib3(scanner,branch);
 	}
-	public static void option2(Scanner scanner, Branch branch) throws ClassNotFoundException, SQLException {
+	public static void option2(Scanner scanner, Branch branch) throws ClassNotFoundException, SQLException, ParseException {
 		scanner.reset();
 		BookDAO bkDAO = new BookDAO();
 		List<Book> books = bkDAO.getBooksByBranch(branch.getBranchId());
 		System.out.println("Choose a book to add to: ");
-		books.forEach(book -> System.out.println(books.indexOf(book)+ 1 + ")." + book.getTitle() 
-				+" by "+ book.getAuthor() + "Number of Copies: " + book.getNumberOfCopies() ));
+		books.forEach(book -> System.out.println(books.indexOf(book)+ 1 + "). " + book.getTitle() 
+				+" by "+ book.getAuthor() + "  Number of Copies: " + book.getNumberOfCopies() ));
+		System.out.println(books.size()+1 + "). Return to previous menu");
 		
-		
-		int chooseBook = scanner.nextInt();
-		Book book = books.get(chooseBook-1);
+		Scanner scannedLine = new Scanner(scanner.nextLine());
+		Book book = new Book();
+		if (scannedLine.hasNextInt()) {
+			int choice = scannedLine.nextInt();
+			if (choice <= books.size()) {
+				book = books.get(choice - 1);
+			} else if (choice == books.size()+1) {
+				lib3(scanner,branch);
+			} else {
+				System.out.println("No such entry exists");
+				option2(scanner,branch);
+			}
+		} else {
+			System.out.println("Invalid input");
+			option2(scanner,branch);
+		}
+		scanner.reset();
 		System.out.println("How many would you like to add to " + book.getTitle() + " there are currently " + book.getNumberOfCopies());
-		int addInventory = scanner.nextInt();
+		Scanner inventory = new Scanner(scanner.nextLine());
+		int addInventory = 0;
+		if (inventory.hasNextInt()) {
+			addInventory = inventory.nextInt();
+		} else {
+			System.out.println("Not a valid number");
+			option2(scanner,branch);
+		}
 		bkDAO.updateInventory(book,addInventory,branch);
 		System.out.println("Updated " + book.getTitle() + " from " + book.getNumberOfCopies()
 		+ " copies to " + (book.getNumberOfCopies() + addInventory) + " copies");
