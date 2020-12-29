@@ -38,6 +38,7 @@ public class AdministratorPage {
 				editBranches(scanner);
 				break;
 			case 5:
+				EditBorrowers.borr1(scanner);
 				break;
 			case 6:
 				break;
@@ -51,7 +52,7 @@ public class AdministratorPage {
 		
 	}
 	public static void editBooks(Scanner scanner) throws ClassNotFoundException, SQLException {
-		System.out.println("What would you like to do\n?"
+		System.out.println("What would you like to do?\n"
 				+ "1) Add book\n2) Update book\n3) Delete Book");
 		Scanner scannedLine = new Scanner(scanner.nextLine());
 		if (scannedLine.hasNextInt()) {
@@ -144,16 +145,16 @@ public class AdministratorPage {
 		books.forEach(book -> System.out.println(books.indexOf(book)+1 + ") " + book.getTitle() + " by " + book.getAuthor() 
 		 + " Book ID: " +book.getBookId()));
 		Scanner scannedLine = new Scanner(scanner.nextLine());
-		Book book = new Book();
+		Book newBook = new Book();
 		if (scannedLine.hasNextInt()) {
 			int choice = scannedLine.nextInt();
-			book = books.get(choice - 1);
+			newBook = books.get(choice - 1);
 		}
-		System.out.println("What would you like to change " + book.getTitle() + "'s title to?" );
+		System.out.println("What would you like to change " + newBook.getTitle() + "'s title to?" );
 		String newTitle = scanner.nextLine();
-		System.out.println("Who would you like to change " + book.getTitle() + "'s author to?" );
+		System.out.println("Who would you like to change " + newBook.getTitle() + "'s author to?" );
 		String newAuthor = scanner.nextLine();
-		bkDAO.updateBook(book.getBookId(),newTitle,newAuthor);
+		bkDAO.updateBook(newBook.getBookId(),newTitle,newAuthor);
 		admin1(scanner);
 	}
 	public static void deleteBook(Scanner scanner) throws ClassNotFoundException, SQLException {

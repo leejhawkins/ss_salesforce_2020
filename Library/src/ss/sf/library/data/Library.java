@@ -80,8 +80,9 @@ public class Library {
 				currentBranch = branches.get(choice-1);
 				return currentBranch;
 				
-			} else {
-				return currentBranch;
+			} else if (choice == branches.size()){
+				
+				
 			}
 			
 		}

@@ -49,18 +49,35 @@ public class LibrarianPage {
 		}
 	}
 	public static void lib2(Scanner scanner) throws ClassNotFoundException, SQLException {
-		Branch currentBranch = Library.getCurrentBranch(scanner);
-		if (currentBranch != null) {
-			LibrarianPage.lib3(scanner,currentBranch);
+		BranchDAO brDAO = new BranchDAO();
+		List<Branch> branches = brDAO.readBranches();
+		branches.forEach(branch -> System.out.println(branches.indexOf(branch)+1+")"
+		 + " " + branch.getBranchName() + "- " + branch.getBranchAddress()));
+		System.out.println(branches.size()+1 + ") Return to previous menu\n");
+		Branch currentBranch = new Branch();
+		Scanner scannedLine = new Scanner(scanner.nextLine());
+		if (scannedLine.hasNextInt()) {
+			int choice = scannedLine.nextInt();
+			if (choice <= branches.size()) {
+				currentBranch = branches.get(choice-1);
+				LibrarianPage.lib3(scanner,currentBranch);
+			} else if (choice == branches.size() +1){		
+				LibrarianPage.lib1(scanner);
+			} else {
+				System.out.println("Invalid choice");
+				LibrarianPage.lib2(scanner);
+			}
+			
 		} else {
-			LibrarianPage.lib1(scanner);
+			System.out.println("Invalid choice only enter number of branch");
+			LibrarianPage.lib2(scanner);
 		}
 	}
 	public static void lib3(Scanner scanner,Branch branch) throws ClassNotFoundException, SQLException {
 		
 		
 		System.out.println("Current Branch: " + branch.getBranchName() + "\n1). Update the details of the Library:\n" +
-				"2). Add copies of Book to branch\n3) Quit to previous");
+				"2). Add copies of Book to branch\n3). Quit to previous");
 		Scanner scannedLine = new Scanner(scanner.nextLine());
 		if (scannedLine.hasNextInt()) {
 			int choice = scannedLine.nextInt();
@@ -88,17 +105,12 @@ public class LibrarianPage {
 		
 		String newName = scanner.nextLine();
 		System.out.println("Please enter new branch address or enter N/A for no change:");
-		if (newName.toLowerCase() == "n/a") {
-			updatedBranch.setBranchName(branch.getBranchName());			
-		} else {
-			updatedBranch.setBranchName(newName);
-		}
+		newName = newName.toLowerCase().equals("n/a") ? branch.getBranchName() : newName;
+		updatedBranch.setBranchName(newName);
+		
 		String newAddress = scanner.nextLine();
-		if (newAddress.toLowerCase() == "n/a") {
-			updatedBranch.setBranchAddress(branch.getBranchAddress());			
-		} else {
-			updatedBranch.setBranchAddress(newAddress);
-		}
+		newAddress =newAddress.toLowerCase().equals("n/a") ? branch.getBranchAddress() : newAddress;
+		updatedBranch.setBranchAddress(newAddress);
 		brDAO.updateBranch(updatedBranch);
 		System.out.println(branch.getBranchName() + " at " + branch.getBranchAddress()
 				+ " to " + updatedBranch.getBranchName() + " at " + updatedBranch.getBranchAddress());

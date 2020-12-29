@@ -24,9 +24,10 @@ public class BookDAO extends BaseDAO<Book> {
 		save("DELETE from tbl_book where bookId = ?", new Object[] {bookId});
 	}
 	public List<Book> getBooksByBranch(int branchId) throws ClassNotFoundException,SQLException {
-		return read("SELECT tbl_book.bookId,tbl_book.title,tbl_author.authorName,tbl_book_copies.noOfCopies "
-				+ "FROM tbl_book INNER JOIN tbl_author ON tbl_book.authId = tbl_author.authorId INNER JOIN"
-				+ " tbl_book_copies on tbl_book.bookId = tbl_book_copies.bookId where tbl_book_copies.branchId = ?;", new Object[] {branchId});
+		return read("SELECT tbl_book.bookId,tbl_book.title,tbl_author.authorName,tbl_publisher.publisherName,tbl_book_copies.noOfCopies "
+				+ "FROM tbl_book INNER JOIN tbl_author ON tbl_book.authId = tbl_author.authorId "
+				+ " INNER JOIN tbl_publisher on tbl_publisher.publisherId = tbl_book.pubId "
+				+ " INNER JOIN tbl_book_copies on tbl_book.bookId = tbl_book_copies.bookId where tbl_book_copies.branchId = ?;", new Object[] {branchId});
 	}
 	public List<Book> getBook(String bookName) throws ClassNotFoundException,SQLException {
 		return read("SELECT tbl_book.title, tbl_book.bookId,tbl_author.authorName,tbl_publisher.publisherName "
@@ -40,9 +41,9 @@ public class BookDAO extends BaseDAO<Book> {
 	}
 	public List<Book> getAllBooks() throws ClassNotFoundException,SQLException {
 		return read("SELECT tbl_book.title, tbl_book.bookId,tbl_author.authorName,tbl_publisher.publisherName,tbl_book_copies.noOfCopies "
-				+ "FROM tbl_book INNER JOIN tbl_author ON tbl_book.authId = tbl_author.authorId"
-				+ " INNER JOIN tbl_publisher on tbl_publisher.publisherId = tbl_book.pubId "
-				+ " INNER JOIN tbl_book_copies on tbl_book.bookId = tbl_book_copies.bookId GROUP BY tbl_book_copies.noOfCopies", null);
+				+ "FROM (tbl_book INNER JOIN tbl_author ON tbl_book.authId = tbl_author.authorId"
+				+ " INNER JOIN tbl_publisher on tbl_publisher.publisherId = tbl_book.pubId) "
+				+ " LEFT JOIN tbl_book_copies on tbl_book.bookId = tbl_book_copies.bookId", null);
 	}
 	public void updateInventory(Book book, int numberAdded,Branch branch) throws ClassNotFoundException {
 		save("UPDATE tbl_book_copies set noOfCopies = ? where (bookId=? and branchId=?);", new Object[] {book.getNumberOfCopies() + numberAdded,book.getBookId(),branch.getBranchId()});
@@ -58,6 +59,7 @@ public class BookDAO extends BaseDAO<Book> {
 			book.setAuthor(rs.getString("authorName"));
 			book.setTitle(rs.getString("title"));
 			book.setNumberOfCopies(rs.getInt("noOfCopies"));
+			book.setPublisher(rs.getString("publisherName"));
 			books.add(book);
 		}
 		return books;

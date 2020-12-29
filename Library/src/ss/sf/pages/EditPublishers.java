@@ -9,7 +9,7 @@ import java.util.List;
 
 public class EditPublishers {
 	public static void editPublishers(Scanner scanner) throws ClassNotFoundException, SQLException {
-		System.out.println("What would you like to do\n?"
+		System.out.println("What would you like to do?\n"
 				+ "1) Add Publisher\n2) Update Publisher \n3) Delete Publisher");
 		Scanner scannedLine = new Scanner(scanner.nextLine());
 		if (scannedLine.hasNextInt()) {
