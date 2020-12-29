@@ -77,7 +77,7 @@ public class BorrowerPage {
 			List<Book> books = bkDAO.getBooksByBranch(currentBranch.getBranchId());
 			System.out.println("Which book would you like to check out: ");
 			books.forEach(book -> System.out.println(books.indexOf(book)+ 1 + ")." + book.getTitle() 
-					+" by "+ book.getAuthor() ));
+					+" by "+ book.getAuthor() + " published by: " + book.getPublisher()));
 			System.out.println(books.size()+1 + "). Return to previous menu");
 			
 			Scanner scannedLine = new Scanner(scanner.nextLine());
@@ -121,7 +121,7 @@ public class BorrowerPage {
 			int choice = scannedLine.nextInt();
 			if (choice <= bkLoans.size()) {
 				chckedBk = bkLoans.get(choice - 1);
-				bklnDAO.returnCheckedOutBook(chckedBk.getBookId(), borrower.getCardNo());
+				bklnDAO.returnCheckedOutBook(chckedBk);
 				BorrowerPage.borr1(scanner, borrower);
 			} else if (choice == bkLoans.size()+1) {
 				borr1(scanner,borrower);
@@ -145,7 +145,7 @@ public class BorrowerPage {
 			borr1(scanner, borrower);
 		} else {
 			books.forEach(book -> System.out.println(books.indexOf(book)+ 1 + ")." + book.getTitle() 
-			+" by "+ book.getAuthor() ));
+			+" by "+ book.getAuthor()+ " published by: " + book.getPublisher()));
 			System.out.println("\n");
 			borr1(scanner, borrower);
 		}

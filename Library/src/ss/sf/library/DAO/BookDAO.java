@@ -20,9 +20,9 @@ public class BookDAO extends BaseDAO<Book> {
 		save("DELETE from tbl_book where bookId = ?", new Object[] {bookId});
 	}
 	public List<Book> getBooksByBranch(int branchId) throws ClassNotFoundException,SQLException {
-		return read("SELECT tbl_book.bookId,tbl_book.title,tbl_author.authorName,tbl_publisher.publisherName,tbl_book_copies.noOfCopies "
-				+ "FROM (tbl_book INNER JOIN tbl_author ON tbl_book.authId = tbl_author.authorId "
-				+ " INNER JOIN tbl_publisher on tbl_publisher.publisherId = tbl_book.pubId) "
+		return read("SELECT * "
+				+ "FROM (tbl_book LEFT JOIN tbl_author ON tbl_book.authId = tbl_author.authorId "
+				+ " LEFT JOIN tbl_publisher on tbl_publisher.publisherId = tbl_book.pubId) "
 				+ " LEFT JOIN tbl_book_copies on tbl_book.bookId = tbl_book_copies.bookId where tbl_book_copies.branchId = ?;", new Object[] {branchId});
 	}
 	public List<Book> getBook(String bookName) throws ClassNotFoundException,SQLException {
@@ -31,15 +31,15 @@ public class BookDAO extends BaseDAO<Book> {
 				+ " INNER JOIN tbl_publisher on tbl_publisher.publisherId = tbl_book.pubId WHERE tbl_book.title = ?",  new Object[] {bookName});
 	}
 	public List<Book> getBooksByAuthor(String authorName) throws ClassNotFoundException,SQLException {
-		return read("SELECT tbl_book.title, tbl_book.bookId,tbl_author.authorName,tbl_publisher.publisherName,tbl_book_copies.noOfCopies "
-				+ "FROM (tbl_book INNER JOIN tbl_author ON tbl_book.authId = tbl_author.authorId "
+		return read("SELECT tbl_book.title, tbl_book.bookId,tbl_author.authorName,tbl_publisher.publisherName,tbl_book_copies.noOfCopies"
+				+ "FROM (tbl_book INNER JOIN tbl_author ON tbl_book.authId = tbl_author.authorId"
 				+ "INNER JOIN tbl_publisher on tbl_publisher.publisherId = tbl_book.pubId)"
-				+ " LEFT JOIN tbl_book_copies on tbl_book.bookId = tbl_book_copies.bookId WHERE tbl_author.authorName LIKE (?)",  new Object[] {"%" + authorName + "%"});
+				+ " LEFT JOIN tbl_book.bookId on tbl_book.bookId = tbl_book_copies.bookId WHERE tbl_author.authorName LIKE ?",  new Object[] {"%" + authorName + "%"});
 	}
 	public List<Book> getAllBooks() throws ClassNotFoundException,SQLException {
-		return read("SELECT tbl_book.title, tbl_book.bookId,tbl_author.authorName,tbl_publisher.publisherName,tbl_book_copies.noOfCopies "
-				+ "FROM (tbl_book INNER JOIN tbl_author ON tbl_book.authId = tbl_author.authorId"
-				+ " INNER JOIN tbl_publisher on tbl_publisher.publisherId = tbl_book.pubId) "
+		return read("SELECT * "
+				+ "FROM (tbl_book LEFT JOIN tbl_author ON tbl_book.authId = tbl_author.authorId"
+				+ " LEFT JOIN tbl_publisher on tbl_publisher.publisherId = tbl_book.pubId) "
 				+ " LEFT JOIN tbl_book_copies on tbl_book.bookId = tbl_book_copies.bookId", null);
 	}
 	public void updateInventory(Book book, int numberAdded,Branch branch) throws ClassNotFoundException {

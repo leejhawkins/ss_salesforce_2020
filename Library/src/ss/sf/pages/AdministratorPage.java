@@ -154,7 +154,7 @@ public class AdministratorPage {
 		System.out.println("Enter the number of the book you would like to edit by row number");
 		List<Book> books = bkDAO.getAllBooks();
 		books.forEach(book -> System.out.println(books.indexOf(book)+1 + ") " + book.getTitle() + " by " + book.getAuthor() 
-		 + " Book ID: " +book.getBookId()));
+		 + " Book ID: " +book.getBookId() + " published by: " + book.getPublisher()));
 		System.out.println(books.size()+1 + "). Return to Administrator main menu");
 		Scanner scannedLine = new Scanner(scanner.nextLine());
 		Book newBook = new Book();
@@ -188,7 +188,7 @@ public class AdministratorPage {
 		System.out.println("Enter the number of the row of the book you would like deleted");
 		List<Book> books = bkDAO.getAllBooks();
 		books.forEach(book -> System.out.println(books.indexOf(book)+1 + ") " + book.getTitle() + " by " + book.getAuthor() 
-		 + " Book ID: " +book.getBookId()));
+		 + " Book ID: " +book.getBookId() + " published by: " + book.getPublisher()));
 		System.out.println(books.size()+1 + "). Return to Administrator main menu");
 		Scanner scannedLine = new Scanner(scanner.nextLine());
 		Book book = new Book();
